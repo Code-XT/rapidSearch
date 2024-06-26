@@ -1,5 +1,6 @@
-const SearchPage = () => {
-  return <div>Query Results Here...</div>;
+const SearchPage = ({ searchParams }) => {
+  const { query } = searchParams;
+  return <div>{query}</div>;
 };
 
 export default SearchPage;

@@ -1,5 +1,5 @@
 "use client";
-import { Loader2, Loader2Icon, LoaderCircle, Search } from "lucide-react";
+import { Loader2Icon, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useRef, useState, useTransition } from "react";
