@@ -6,10 +6,12 @@ import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
+  const searchParams = new URLSearchParams();
+  const defaultQuery = searchParams.get("query") || "";
   const inputRef = useRef();
   const [isSearching, startTransition] = useTransition();
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(defaultQuery);
 
   const search = () => {
     if (!searchTerm) return;

@@ -41,7 +41,8 @@ export default function RootLayout({ children }) {
           <div className="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8 lg:py-24">
             <div className="w-full h-full flex flex-col items-center gap-4">
               <h1 className="tracking-tight font-extrabold text-5xl lg:text-7xl text-white">
-                <span className="text-red-500">rapid</span>Search
+                <span className="text-red-500">rapid</span>
+                Search
               </h1>
               <p className="max-w-lg text-center text-xl text-slate-400">
                 Your gateway to FAST search results with symantic querying
