@@ -1,14 +1,16 @@
 import { faker } from "@faker-js/faker";
 import { neon } from "@neondatabase/serverless";
-// import { Index } from "@upstash/vector";
+import { Index } from "@upstash/vector";
 import * as dotenv from "dotenv";
 import { drizzle } from "drizzle-orm/neon-http";
-// import { vectorize } from "../lib/vectorize";
+import { vectorize } from "../lib/vectorize";
 import { productsTable } from "./schema";
 
 dotenv.config();
 
-// const index = new Index();
+const index = new Index();
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function main() {
   const connector = neon(process.env.DATABASE_URL!);
@@ -135,21 +137,25 @@ async function main() {
     });
   });
 
-  products.forEach(async (product) => {
+  for (const product of products) {
     await db.insert(productsTable).values(product).onConflictDoNothing();
 
-    // await index.upsert({
-    //   id: product.id!,
-    //   vector: await vectorize(`${product.name}: ${product.description}`),
-    //   metadata: {
-    //     id: product.id,
-    //     name: product.name,
-    //     description: product.description,
-    //     price: product.price,
-    //     imageId: product.imageId,
-    //   },
-    // });
-  });
+    // Add a delay before each API call
+    await delay(1000); // 1 second delay
+    console.log(`Added product: ${product.name}`);
+
+    await index.upsert({
+      id: product.id!,
+      vector: await vectorize(`${product.name}: ${product.description}`),
+      metadata: {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imageId: product.imageID,
+      },
+    });
+  }
 }
 
 // 'dark_down_jacket_1.png' -> 'Dark Down Jacket 1'
